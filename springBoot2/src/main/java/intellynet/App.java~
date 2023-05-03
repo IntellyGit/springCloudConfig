@@ -1,0 +1,47 @@
+package intellynet;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.couchbase.CouchbaseProperties.Env;
+import org.springframework.cloud.config.server.EnableConfigServer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.core.env.Environment;
+
+
+@EnableConfigServer
+@SpringBootApplication
+public class App {
+
+  static final Logger logger = LoggerFactory.getLogger(App.class);
+
+  
+  private static Environment env;    
+
+  @Autowired
+  public App(Environment env){
+    App.env=env;
+  }
+  
+  
+    
+  public static void main(final String[] args) {
+    SpringApplication.run(App.class, args);
+
+    logger.trace("A trace mesage");
+
+    logger.debug("A DEBUG Message");
+    logger.info("An INFO Message");
+    logger.warn("A WARN Message");
+    logger.error("An ERROR Message");
+  
+    logger.info("message from application.properties " + env.getProperty("message-from-application-properties"));
+  }
+
+ 
+  
+}
+
